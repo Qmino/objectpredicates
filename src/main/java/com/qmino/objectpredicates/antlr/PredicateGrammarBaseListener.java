@@ -43,6 +43,18 @@ public class PredicateGrammarBaseListener implements PredicateGrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterSingleExpression(PredicateGrammarParser.SingleExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSingleExpression(PredicateGrammarParser.SingleExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterNumberInExpression(PredicateGrammarParser.NumberInExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -122,6 +134,18 @@ public class PredicateGrammarBaseListener implements PredicateGrammarListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitMethodBooleanExpression(PredicateGrammarParser.MethodBooleanExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMultipleExpressions(PredicateGrammarParser.MultipleExpressionsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMultipleExpressions(PredicateGrammarParser.MultipleExpressionsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

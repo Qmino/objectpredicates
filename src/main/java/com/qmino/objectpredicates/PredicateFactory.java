@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) [year] [fullname]
+ * Copyright (c) 2024 Yves Vandewoude / Qmino BV
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -43,20 +43,7 @@ import java.util.function.Predicate;
 public class PredicateFactory {
 
     public static <T> Predicate<T> of(String condition, Class<T> target) {
-        try {
-            InputStream input = new ByteArrayInputStream(condition.getBytes());
-            PredicateGrammarLexer lexer = new PredicateGrammarLexer(CharStreams.fromStream(input));
-            PredicateGrammarParser parser = new PredicateGrammarParser(new CommonTokenStream(lexer));
-            Visitor<T> visitor = new Visitor<>(target);
-            Predicate<T> result = visitor.visit(parser.start());
-            if (result == null) {
-                throw new PredicateConstructionException("Invalid query");
-            } else {
-                return result;
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return of(condition, target, true);
     }
 
     public static <T> Predicate<T> of(String condition, Class<T> target, boolean ignoreIntermediateNulls) {

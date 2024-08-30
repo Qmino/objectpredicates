@@ -10,6 +10,11 @@ start :
 
 expression
     :
+    | multipleExpressions
+    | singleExpression
+    ;
+
+singleExpression:
     | dateOperatorExpression
     | numberOperatorExpression
     | stringOperatorExpression
@@ -62,20 +67,24 @@ methodBooleanExpression:
     | WS? BOOLEAN WS? OPERATOR WS? METHOD WS?
     ;
 
+multipleExpressions:
+    | singleExpression ((WS | ',')+ singleExpression)*
+    ;
+
 bracketExpression:
-    | '(' WS? expression WS? ')'
+    | '(' WS? singleExpression WS? ')'
     ;
 andExpression
     :
-    |  AND WS? '(' expression (',' expression)* WS? ')'
+    |  AND WS? '(' singleExpression (',' singleExpression)* WS? ')'
     ;
 orExpression
     :
-    | OR WS? '(' expression (',' expression)* WS? ')'
+    | OR WS? '(' singleExpression (',' singleExpression)* WS? ')'
     ;
 notExpression
     :
-    | NOT WS? expression
+    | NOT WS? singleExpression
     ;
 
 WS: (' ' | '\t' | '\r' | '\n')+ -> skip;

@@ -25,6 +25,12 @@ public interface PredicateGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExpression(PredicateGrammarParser.ExpressionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link PredicateGrammarParser#singleExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSingleExpression(PredicateGrammarParser.SingleExpressionContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link PredicateGrammarParser#numberInExpression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -66,6 +72,12 @@ public interface PredicateGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitMethodBooleanExpression(PredicateGrammarParser.MethodBooleanExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PredicateGrammarParser#multipleExpressions}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMultipleExpressions(PredicateGrammarParser.MultipleExpressionsContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PredicateGrammarParser#bracketExpression}.
 	 * @param ctx the parse tree

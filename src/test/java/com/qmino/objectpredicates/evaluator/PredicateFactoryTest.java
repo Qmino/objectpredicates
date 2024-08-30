@@ -1,5 +1,30 @@
-package com.qmino.objectpredicates;
+/*
+ * MIT License
+ *
+ * Copyright (c) [year] [fullname]
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 
+package com.qmino.objectpredicates.evaluator;
+
+import com.qmino.objectpredicates.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -415,5 +440,15 @@ public class PredicateFactoryTest {
                 alarmTime == 2024-10-11T10:15:15
                 """, Clock.class);
         Assertions.assertTrue(predicate.test(testClock));
+    }
+
+    @Test
+    @DisplayName("Forbid accidental multiple expression queries")
+    public void testForbiddenStatements() {
+        // This is an invalid query since the second bracket after (retired == true) closes the expression. As such
+        // it are actually three expressions, and hense invalid.
+        Assertions.assertThrows(PredicateConstructionException.class, () -> PredicateFactory.of("""
+                and((retired == true)), or ((age >= 25), not(father.address.street != null)), firstName in {"John", "Pete"})
+                """, Person.class));
     }
 }

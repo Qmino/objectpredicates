@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 /**
  * @author Yves Vandewoude
  */
-abstract class ObjectPredicate<T> implements Predicate<T> {
+public abstract class ObjectPredicate<T> implements Predicate<T> {
 
     private boolean ignoreIntermediateNulls = true;
 
