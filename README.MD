@@ -2,6 +2,16 @@
 
 ObjectPredicates is a small Java library that allows you to create executable predicates (conditions or rules) based on a text query. This can be useful for building simple rule-based systems where the rules are defined and dynamically managed by users of your application.
 
+# How to build ObjectPredicates
+
+Make sure you have Java 21 on your classpath and execute:
+
+`./gradlew clean jar`
+
+If you wish to install the library to your local maven, execute:
+
+`./gradlew publishToMavenLocal`
+
 # How to use ObjectPredicates
 
 There is only one entrance method to the library, which is the `of` method in the class
