@@ -30,16 +30,6 @@ public interface PredicateGrammarListener extends ParseTreeListener {
 	 */
 	void exitExpression(PredicateGrammarParser.ExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link PredicateGrammarParser#singleExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterSingleExpression(PredicateGrammarParser.SingleExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PredicateGrammarParser#singleExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitSingleExpression(PredicateGrammarParser.SingleExpressionContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link PredicateGrammarParser#numberInExpression}.
 	 * @param ctx the parse tree
 	 */
@@ -109,16 +99,6 @@ public interface PredicateGrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitMethodBooleanExpression(PredicateGrammarParser.MethodBooleanExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link PredicateGrammarParser#multipleExpressions}.
-	 * @param ctx the parse tree
-	 */
-	void enterMultipleExpressions(PredicateGrammarParser.MultipleExpressionsContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PredicateGrammarParser#multipleExpressions}.
-	 * @param ctx the parse tree
-	 */
-	void exitMultipleExpressions(PredicateGrammarParser.MultipleExpressionsContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link PredicateGrammarParser#bracketExpression}.
 	 * @param ctx the parse tree

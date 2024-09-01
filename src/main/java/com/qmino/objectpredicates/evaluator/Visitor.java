@@ -17,6 +17,16 @@ public class Visitor<T> extends PredicateGrammarBaseVisitor<ObjectPredicate<T>> 
     }
 
     @Override
+    public ObjectPredicate<T> visitStart(PredicateGrammarParser.StartContext ctx) {
+        if (ctx.getChildCount() == 2 && ctx.getChild(1).getText().equals("<EOF>")) {
+            ctx.removeLastChild();
+        } else if (ctx.getChildCount() > 2) {
+            throw new PredicateConstructionException("More than one expression found. Please check your brackets.");
+        }
+        return super.visitStart(ctx);
+    }
+
+    @Override
     public ObjectPredicate<T> visitNumberInExpression(PredicateGrammarParser.NumberInExpressionContext ctx) {
         List<BigDecimal> children = new ArrayList<>();
         for (int i = 3; i < ctx.getChildCount(); i = i + 2) {
@@ -26,16 +36,6 @@ public class Visitor<T> extends PredicateGrammarBaseVisitor<ObjectPredicate<T>> 
                 ctx.getChild(0).getText(),
                 children,
                 target);
-    }
-
-    @Override
-    public ObjectPredicate<T> visitMultipleExpressions(PredicateGrammarParser.MultipleExpressionsContext ctx) {
-        if (ctx.getChildCount() > 1) {
-            throw new PredicateConstructionException("The query that was specified are actually multiple expressions, " +
-                    "and only one expression is allowed. Please check your brackets!");
-        } else {
-            return visitChildren(ctx);
-        }
     }
 
     @Override
@@ -98,13 +98,13 @@ public class Visitor<T> extends PredicateGrammarBaseVisitor<ObjectPredicate<T>> 
 
     @Override
     public ObjectPredicate<T> visitBracketExpression(PredicateGrammarParser.BracketExpressionContext ctx) {
-        return this.visit(ctx.singleExpression());
+        return this.visit(ctx.expression());
     }
 
     @Override
     public ObjectPredicate<T> visitAndExpression(PredicateGrammarParser.AndExpressionContext ctx) {
         List<ObjectPredicate<T>> selectors = new ArrayList<>();
-        for (PredicateGrammarParser.SingleExpressionContext child : ctx.singleExpression()) {
+        for (PredicateGrammarParser.ExpressionContext child : ctx.expression()) {
             selectors.add(this.visit(child));
         }
         return new AndExpression<>(selectors);
@@ -113,7 +113,7 @@ public class Visitor<T> extends PredicateGrammarBaseVisitor<ObjectPredicate<T>> 
     @Override
     public ObjectPredicate<T> visitOrExpression(PredicateGrammarParser.OrExpressionContext ctx) {
         List<ObjectPredicate<T>> selectors = new ArrayList<>();
-        for (PredicateGrammarParser.SingleExpressionContext child : ctx.singleExpression()) {
+        for (PredicateGrammarParser.ExpressionContext child : ctx.expression()) {
             selectors.add(this.visit(child));
         }
         return new OrExpression<>(selectors);
@@ -122,7 +122,7 @@ public class Visitor<T> extends PredicateGrammarBaseVisitor<ObjectPredicate<T>> 
     @Override
     public ObjectPredicate<T> visitNotExpression(PredicateGrammarParser.NotExpressionContext ctx) {
         List<ObjectPredicate<T>> selectors = new ArrayList<>();
-        selectors.add(this.visit(ctx.singleExpression()));
+        selectors.add(this.visit(ctx.expression()));
         return new NotExpression<>(selectors);
     }
 }
